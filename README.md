@@ -6,11 +6,19 @@ Nessa api de pagamento pix, inicialmente teremos apenas dois endpoints privados:
 
 ## O que deve ser feito:
 
-- [] estruturar as diferentes camadas da aplicação como bem entender, garantindo separação de responsabilidades e desacoplamento. 
-- [] middleware de autorização
-- [] mock de persistência dos dados
-- [] consulta à api de terceiros
-- [] implementação dos endpoints
+- [X] estruturar as diferentes camadas da aplicação como bem entender, garantindo separação de responsabilidades e desacoplamento. 
+- [X] middleware de autorização
+- [X] mock de persistência dos dados
+- [X] consulta à api de terceiros
+- [X] implementação dos endpoints
+- [X] O candidato criará uma nova branch dentro do repositório...
+- [X] Finalizar os dois endpoints que devem ser disponibilizados...
+- [X] Chamada a uma api externa para consulta de dados de conta...
+- [X] Habilitar apenas escrita e leitura básica de transações em um mock...
+- [X] Versionamento
+- [X] Tipagem
+- [X] Tratativas de Forms (Dados de entrada, se já existe etc.)
+- [X] Swagger
 
 >[!IMPORTANT]
 >Os trechos de código abaixo tem como objetivo servirem de base para a implementação do candidato. Eles podem ser copiados e colados no arquivo apropriado para que o candidato possa finalizar a implementação.
@@ -99,3 +107,12 @@ export type Payment = {
   bank: string;
 }
 ```
+>[!OBSERVATIONS]
+
+Durante o desenvolvimento do projeto, implementei o padrão MVC, com a exceção da camada de visualização (view). O serviço index.ts é responsável pela autenticação através de middleware, enquanto o serviço server.ts gerencia a persistência de dados no db.json.
+
+Além disso, fiz ajustes na tipagem dos dados, incluindo a adição de um campo amount (para representar o valor da transação) e um campo status (que servirá para um futuro módulo de atualização de status, conforme as regras de negócio).
+
+Para seguir as melhores práticas, eu separaria o serviço server.ts e o index.ts em módulos distintos e colocaria a persistência de dados no serviço index.ts, pois ele seria o módulo principal da Voluti. No entanto, dado que se trata de um teste para verificar o consumo externo de APIs, mantive a estrutura atual.
+
+Adicionalmente, foram adicionadas dependências para apoiar a implementação das regras de negócio e seguir padrões RESTful, como o Swagger entre outras. Uma dessas dependências é o npm-run-all, que facilita a execução simultânea dos dois serviços.
